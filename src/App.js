@@ -4,12 +4,37 @@ import Tabela from './Tabela';
 import FormPost from './Form';
 import {BotaoAmarelo, BotaoVerde} from './ComponentesBasicos';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
+
+const Home = () => (
+  <div>
+    <h2>Home</h2>
+  </div>
+)
+
+const About = () => (
+  <div>
+    <h2>About</h2>
+  </div>
+)
+
+const Topic = ({ match }) => (
+  <div>
+    <h3>{match.params.topicId}</h3>
+  </div>
+)
+
+
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bla: true,
       nome: "mariana",
       bc: [],
       atualizado: true,
@@ -62,6 +87,11 @@ class App extends Component {
 
           {blocos.map(bloco => <Tabela bloco={bloco} />)}
         </div>
+        <Router>
+          <div>
+              {/* TODO - refatorar para blocos */}
+          </div>
+        </Router>
       </div>
     );
   }
