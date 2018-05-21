@@ -8,7 +8,7 @@ const FormPost = (props) => {
         isSubmitting,
         handleChange,
         handleSubmit,
-        handleReset,
+        resetForm,
     } = props;
 
     return (
@@ -43,7 +43,7 @@ const FormPost = (props) => {
                         onChange={handleChange}
                         required />
             </div>
-            <button className="btn btn-warning margem-pequena margem-bottom" disabled={isSubmitting}>
+            <button type="submit" className="btn btn-warning margem-pequena margem-bottom" disabled={isSubmitting}>
                 {isSubmitting ? 'Wait' : 'Add transaction'}
             </button>
         </form>
@@ -58,9 +58,10 @@ export default withFormik({
         amount: '',
     }),
 
-    handleSubmit: (values, { setSubmitting, props }) => {
+    handleSubmit: (values, { setSubmitting, props, resetForm }) => {
             props.submit(values);
             setSubmitting(false);
-    }
+            resetForm();
+    },
 })(FormPost);
 
