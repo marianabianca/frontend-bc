@@ -37,6 +37,7 @@ class App extends Component {
     this.state = {
       nome: "mariana",
       bc: [],
+      tamanho: 0,
       atualizado: true,
     }
   }
@@ -47,31 +48,33 @@ class App extends Component {
 
   getCall () {
     axios.get('http://localhost:81/')
-      .then(
-        response => this.setState(
+      .then((response) => {
+        this.setState(
           {bc: response.data,
-          atualizado: true,},
-        )
+            tamanho: response.data.length,
+            atualizado: true,}
+        );
+      }
       )
   }
 
   putCall () {
-    axios.put('http://localhost:81/blockchain/closeblock') // TODO pedir pra retornar os blocos
+    axios.put('http://localhost:81/blockchain/closeblock')
       .then(
-        response => this.setState(
-            {atualizado: false}
-        )
+          response => this.setState(
+              {atualizado: false}
+            )
       )
   }
 
   postCall (obj) {
     axios.post('http://localhost:81/blockchain', obj)
-      .then(
-        response => this.setState(
-            {atualizado: false}
-        )
-      )  
-  }
+    .then((response) => {
+      var aux = this.state.bc;
+      aux[1].transactions.push(response.data);
+        this.setState({});
+      }
+    )}
 
   render() {
     const blocos = this.state.bc;
@@ -86,6 +89,9 @@ class App extends Component {
           {!this.state.atualizado && <BotaoVerde onClick={() => this.getCall()} mensagem="Refresh"/>}
 
           {blocos.map(bloco => <Tabela bloco={bloco} />)}
+          {blocos.map(bloco => console.log(bloco.index))}
+
+          
         </div>
         <Router>
           <div>
