@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import { withFormik } from 'formik';
+import {PageTitle} from "./BasicComponents"
 
 const FormPost = (props) => {
     const {
@@ -12,7 +12,9 @@ const FormPost = (props) => {
     } = props;
 
     return (
-    <div className="jumbotron padding-menor margem-topo">
+    <div>
+        <PageTitle title="Add transaction" />
+        <div className="jumbotron small-padding top-margin">
         <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label>Sender</label>
@@ -35,7 +37,7 @@ const FormPost = (props) => {
             <div className="form-group">
                 <label>Amount</label>
                 <input type="number" 
-                        step="0.01" 
+                        step="0.001" 
                         className="form-control" 
                         placeholder="Enter Amount" 
                         name="amount" 
@@ -43,10 +45,11 @@ const FormPost = (props) => {
                         onChange={handleChange}
                         required />
             </div>
-            <button type="submit" className="btn btn-warning margem-pequena margem-bottom" disabled={isSubmitting}>
+            <button type="submit" className="btn btn-danger mt-3" disabled={isSubmitting}>
                 {isSubmitting ? 'Wait' : 'Add transaction'}
             </button>
         </form>
+    </div>
     </div>
     )
 }

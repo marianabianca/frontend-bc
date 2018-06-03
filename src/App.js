@@ -1,107 +1,61 @@
 import React, { Component } from 'react';
-import './App.css';
-import Tabela from './Tabela';
-import FormPost from './Form';
-import {BotaoAmarelo, BotaoVerde} from './ComponentesBasicos';
 import axios from 'axios';
 import {
   BrowserRouter as Router,
   Route,
-  Link
+  Link,
 } from 'react-router-dom'
-
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-)
-
-const About = () => (
-  <div>
-    <h2>About</h2>
-  </div>
-)
-
-const Topic = ({ match }) => (
-  <div>
-    <h3>{match.params.topicId}</h3>
-  </div>
-)
-
-
+import FormPost from './Form';
+import AllBlocks from './AllBlocks';
+import EspecificBlock from './EspecififBlock';
+import LastBlock from "./LastBlock";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nome: "mariana",
       bc: [],
-      tamanho: 0,
-      atualizado: true,
     }
   }
 
-  componentDidMount () {
-    this.getCall()
-  }
-
-  getCall () {
-    axios.get('http://localhost:81/')
-      .then((response) => {
-        this.setState(
-          {bc: response.data,
-            tamanho: response.data.length,
-            atualizado: true,}
-        );
-      }
-      )
-  }
-
-  putCall () {
-    axios.put('http://localhost:81/blockchain/closeblock')
-      .then(
-          response => this.setState(
-              {atualizado: false}
-            )
-      )
-  }
-
   postCall (obj) {
-    axios.post('http://localhost:81/blockchain', obj)
-    .then((response) => {
-      var aux = this.state.bc;
-      aux[1].transactions.push(response.data);
-        this.setState({});
-      }
-    )}
+    axios.post('http://localhost:81/blockchain', obj);
+  }
 
-  render() {
-    const blocos = this.state.bc;
-    
+  render() {    
     return (
       <div className="App">
-        <div className="container">
-          <FormPost submit={(valores) => this.postCall(valores)}/>
+          <Router>
+            <div>
+              
+              <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <Link to="/" className="navbar-brand">Blockchain</Link>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" 
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                  <div className="navbar-nav">
+                    <Link to="/" className="nav-link">All blocks</Link>
+                    <Link to="/add-transaction" className="nav-link">Add transaction</Link>
+                    <Link to="/block" className="nav-link">Get especific block</Link>
+                    <Link to="/last-block" className="nav-link">Get last block</Link>
+                  </div>
+                </div>
+              </nav>
 
-          <BotaoAmarelo onClick={() => this.putCall()} mensagem="Close block"/>
+              <div className="container">
+                <Route exact path="/" render={(props) => <AllBlocks />} />
+                <Route path="/add-transaction" render={(props) => <FormPost submit={(values) => this.postCall(values)}/>} />
+                <Route path="/block" render={(props) => <EspecificBlock />} />
+                <Route path="/last-block" render={(props) => <LastBlock />} />
+              </div>
 
-          {!this.state.atualizado && <BotaoVerde onClick={() => this.getCall()} mensagem="Refresh"/>}
-
-          {blocos.map(bloco => <Tabela bloco={bloco} />)}
-          {blocos.map(bloco => console.log(bloco.index))}
-
-          
-        </div>
-        <Router>
-          <div>
-              {/* TODO - refatorar para blocos */}
-          </div>
-        </Router>
+            </div>
+          </Router>
       </div>
     );
   }
 }
-
 
 export default App;

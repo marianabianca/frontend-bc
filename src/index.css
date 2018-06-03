@@ -5,27 +5,27 @@ body {
   background-color: #FFFFFF;
 }
 
-.padding-menor {
-  padding: 20px;
+.App {
+  text-align: center;
 }
 
-.margem-pequena {
-  margin: 5px;
+.display-5 {
+  color: #DC3545;
 }
 
-.margem-topo {
-  margin-top: 20px;
+.jumbotron {
+  padding: 30px;
 }
 
-.margem-bottom {
-  margin-bottom: 10px;
+.alert {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.botao-largo {
-  width: 100%;
+.table {
+  color: #3D3D41;
 }
 
-.margem-botao-verde {
-  margin-bottom: -10px;
-  margin-top: 20px;
+.alert-light {
+  color: #DC3545;
 }
