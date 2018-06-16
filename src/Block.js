@@ -42,7 +42,6 @@ class Block extends Component {
         return (
             <div className="jumbotron padding-menor margem-topo">
                 <BlockInfo index={index} hash={hash} />
-                {index} {hash}
                 <Table transactions={transactions} />
                 {hash === "" && <Button onClick={() => this.putCall(aux)} mensagem="Close block"/>}
             </div>
